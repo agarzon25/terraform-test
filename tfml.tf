@@ -6,12 +6,12 @@ provider "google" {
 }
 
 resource "google_compute_instance" "vm_instance" {
-	name = "instance-3"
+	name = "ml-pipeline-test"
 	machine_type = "f1-micro"
 
 	boot_disk {
 		initialize_params {
-			image = "debian-9-stretch-v20190124"
+			image = "ml-pipeline"
 		}
 	}
 
@@ -21,9 +21,9 @@ resource "google_compute_instance" "vm_instance" {
 		}
 	}
 
-	metadata_startup_script = "script goes here"
+	metadata_startup_script = "python serving/tensorflow_serving/example/mnist_saved_model.py --training interation 10 --model_version=4 ~/tmp/mnist/test"
 }
 
-output "ip" {
-	value = "This is a test IP"
+output "Creating model!" {
+	value = "ls ~/tmp/mnist/test"
 }
